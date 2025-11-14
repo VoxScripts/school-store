@@ -66,11 +66,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(process.cwd(), 'public')));
+
+// 🔥 Persistent 30-day cookie to keep cart saved
 app.use(
   session({
     secret: 'school-store-secret',
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
+      sameSite: 'lax',
+      secure: false // change to true ON RENDER (HTTPS)
+    }
   })
 );
 
@@ -116,12 +124,11 @@ app.post('/cart/add', (req, res) => {
   if (existing) existing.qty += 1;
   else cart.push({ id: p.id, name: p.name, price: p.price, image_url: p.image_url, qty: 1 });
 
-  // If this was an AJAX/fetch request, return JSON (for popup + live count)
   if (req.accepts('json')) {
     const count = cart.reduce((s, i) => s + i.qty, 0);
     return res.json({ ok: true, count });
   }
-  // Fallback: redirect (shouldn't be used by our UI anymore)
+
   res.redirect('/cart');
 });
 
@@ -158,7 +165,6 @@ app.post('/checkout', (req, res) => {
   if (cart.length === 0) return res.redirect('/');
   const { customer_name, customer_phone, customer_class, payment_method } = req.body;
 
-  // All fields required (server-side guard)
   if (!customer_name || !customer_phone || !customer_class || !payment_method) {
     return res.redirect('/checkout');
   }
@@ -187,7 +193,7 @@ app.post('/checkout', (req, res) => {
   if (payment_method === 'cash') {
     return res.redirect(`/order/placed/${orderId}`);
   } else {
-    const base = process.env.ZIINA_BASE_URL || ''; // we won't say Ziina in UI
+    const base = process.env.ZIINA_BASE_URL || '';
     const url = base ? `${base}?amount=${fmtMoney(total)}` : `/order/placed/${orderId}`;
     return res.render('redirect-card', { url, total, fmtMoney });
   }
