@@ -10,6 +10,19 @@ import ejsMate from 'ejs-mate'; // layout engine
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// 🔥 REQUIRED FOR RENDER (fixes secure cookies)
+app.set('trust proxy', 1);
+
+// --- HTTPS ENFORCEMENT IN PRODUCTION ---
+if (process.env.NODE_ENV === "production") {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(`https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
+
 // --- View Engine Setup ---
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -67,7 +80,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(process.cwd(), 'public')));
 
-// 🔥 Persistent 30-day cookie to keep cart saved
+// 🔥 FIXED: PERSISTENT 30-DAY SESSION COOKIE + SECURE IN PROD + TRUST PROXY
 app.use(
   session({
     secret: 'school-store-secret',
@@ -77,13 +90,12 @@ app.use(
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
       sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production' // true only on Render
+      secure: process.env.NODE_ENV === 'production' // HTTPS-only in production
     }
   })
 );
 
-
-// Default locals (layout-safe)
+// Default locals (for layout)
 app.use((req, res, next) => {
   res.locals.title = 'School Store';
   res.locals.cart = req.session.cart || [];
@@ -112,7 +124,7 @@ app.get('/', (req, res) => {
   res.render('home', { products, cart: getCart(req) });
 });
 
-// Add to cart
+// Add to cart (supports AJAX)
 app.post('/cart/add', (req, res) => {
   const { id } = req.body;
   const p = db.prepare('SELECT * FROM products WHERE id=? AND active=1').get(id);
@@ -285,7 +297,7 @@ app.get('/admin/orders/:id', ensureAdmin, (req, res) => {
   res.render('admin-order-detail', { order, items, fmtMoney });
 });
 
-// Toggle Paid/Unpaid (with page reload)
+// Toggle Paid/Unpaid
 app.post('/admin/orders/:id/toggle-paid', ensureAdmin, (req, res) => {
   const order = db.prepare('SELECT status FROM orders WHERE id=?').get(req.params.id);
   if (order) {
@@ -300,7 +312,7 @@ app.post('/admin/orders/:id/mark-cancelled', ensureAdmin, (req, res) => {
   res.redirect(`/admin/orders/${req.params.id}`);
 });
 
-// --- Start ---
+// --- Start Server ---
 app.listen(PORT, () => {
   console.log(`School Store running on http://localhost:${PORT}`);
 });
