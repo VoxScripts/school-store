@@ -77,10 +77,11 @@ app.use(
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 days
       sameSite: 'lax',
-      secure: false // change to true ON RENDER (HTTPS)
+      secure: process.env.NODE_ENV === 'production' // true only on Render
     }
   })
 );
+
 
 // Default locals (layout-safe)
 app.use((req, res, next) => {
