@@ -1,0 +1,14 @@
+<% layout('layout', { title: 'Admin' }) %>
+<section>
+  <h1>Admin Dashboard</h1>
+  <div class="grid">
+    <div class="card"><div class="p"><div class="muted">Products</div><div style="font-size:28px;font-weight:800;"><%= productCount %></div></div></div>
+    <div class="card"><div class="p"><div class="muted">Orders</div><div style="font-size:28px;font-weight:800;"><%= orderCount %></div></div></div>
+    <div class="card"><div class="p"><div class="muted">Unpaid</div><div style="font-size:28px;font-weight:800;"><%= unpaid %></div></div></div>
+  </div>
+  <div style="margin-top:12px;display:flex;gap:8px;">
+    <a href="/admin/items" class="btn">Manage Items</a>
+    <a href="/admin/orders" class="btn">View Orders</a>
+    <a href="/admin/logout" class="btn ghost right">Logout</a>
+  </div>
+</section>

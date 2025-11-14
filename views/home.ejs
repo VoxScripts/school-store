@@ -1,0 +1,26 @@
+<% layout('layout', { title: 'Store', cart }) %>
+<section>
+  <h1>Shop</h1>
+  <% if (!products.length) { %>
+    <div class="empty">No items yet. Check back later!</div>
+  <% } else { %>
+  <div class="grid">
+    <% products.forEach(p=> { %>
+      <div class="card">
+        <img src="<%= p.image_url %>" alt="<%= p.name %>"/>
+        <div class="p" style="display:flex;gap:8px;flex-direction:column;">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <strong><%= p.name %></strong>
+            <span class="price">AED <%= p.price.toFixed(2) %></span>
+          </div>
+          <p class="muted"><%= p.description %></p>
+          <form action="/cart/add" method="post" class="right add-to-cart">
+            <input type="hidden" name="id" value="<%= p.id %>"/>
+            <button class="btn primary">Add to cart</button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <% } %>
+</section>

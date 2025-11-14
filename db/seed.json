@@ -1,0 +1,22 @@
+{
+  "products": [
+    {
+      "name": "Notebook A5",
+      "description": "80 pages, ruled",
+      "price": 7.5,
+      "image_url": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      "name": "Black Ball Pen",
+      "description": "0.7mm gel ink",
+      "price": 3.0,
+      "image_url": "https://images.unsplash.com/photo-1588658524143-5a7720d8d8ad?q=80&w=800&auto=format&fit=crop"
+    },
+    {
+      "name": "School Hoodie",
+      "description": "Unisex, sizes S-XL",
+      "price": 85.0,
+      "image_url": "https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop"
+    }
+  ]
+}

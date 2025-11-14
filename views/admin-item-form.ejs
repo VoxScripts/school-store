@@ -1,0 +1,17 @@
+<% layout('layout', { title: (item ? 'Edit' : 'New') + ' Item' }) %>
+<section style="max-width:700px;">
+  <h1><%= item ? 'Edit' : 'New' %> Item</h1>
+  <form action="<%= item ? '/admin/items/'+item.id+'/update' : '/admin/items' %>" method="post" style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+    <div class="row">
+      <div><label>Name</label><input name="name" required value="<%= item?item.name:'' %>"/></div>
+      <div><label>Price (AED)</label><input name="price" required type="number" step="0.01" value="<%= item?item.price:'' %>"/></div>
+    </div>
+    <div class="row">
+      <div><label>Image URL</label><input name="image_url" value="<%= item?item.image_url:'' %>"/></div>
+      <div><label>Description</label><input name="description" value="<%= item?item.description:'' %>"/></div>
+    </div>
+    <div class="row full">
+      <button class="btn primary"><%= item ? 'Update' : 'Create' %></button>
+    </div>
+  </form>
+</section>

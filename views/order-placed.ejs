@@ -1,0 +1,10 @@
+<% layout('layout', { title: 'Order Placed' }) %>
+<section>
+  <h1>Order submitted</h1>
+  <p>Your order (#<%= order.id %>) has been recorded as <span class="badge"><%= order.status %></span>.</p>
+  <p class="muted">Orders are marked PAID by the admin once cash is received or Card payment is confirmed.</p>
+  <div class="alert">
+    <strong>Cash instructions:</strong> Pay <%= shaikh %> <%= Number(order.total_amount).toFixed(2) %> AED in school to process your order.
+  </div>
+  <p><a href="/" class="btn">Back to store</a></p>
+</section>

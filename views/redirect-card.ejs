@@ -1,0 +1,10 @@
+<% layout('layout', { title: 'Payment Portal' }) %>
+<section>
+  <h1>Payment Portal</h1>
+  <p>You'll be redirected to complete card payment for <strong>AED <%= fmtMoney(total) %></strong>.</p>
+  <p><a class="btn primary" href="<%= url %>">Continue to Payment</a></p>
+  <p class="muted">If nothing happens, click the button above.</p>
+  <script>
+    setTimeout(()=>{ window.location.href = "<%= url %>"; }, 1200);
+  </script>
+</section>

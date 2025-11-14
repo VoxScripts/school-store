@@ -1,0 +1,37 @@
+<% layout('layout', { title: 'Order #' + order.id }) %>
+<section>
+  <h1>Order #<%= order.id %></h1>
+  <div class="grid" style="grid-template-columns: 1.5fr 1fr;">
+    <div class="card"><div class="p">
+      <div class="muted">Customer</div>
+      <div><strong><%= order.customer_name %></strong></div>
+      <div class="muted"><%= order.customer_phone %> • <%= order.customer_class %></div>
+      <div class="muted">Payment: <%= order.payment_method %></div>
+      <div>Status: <span class="badge <%= order.status === 'paid' ? 'badge-green' : (order.status==='unpaid' ? 'badge-amber':'') %>"><%= order.status %></span></div>
+    </div></div>
+    <div class="card"><div class="p">
+      <div class="muted">Total</div>
+      <div style="font-size:24px;font-weight:800;">AED <%= fmtMoney(order.total_amount) %></div>
+      <div class="muted">Created: <%= order.created_at %></div>
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <form action="/admin/orders/<%= order.id %>/toggle-paid" method="post">
+          <button class="btn <%= order.status==='paid' ? '' : 'primary' %>">
+            <%= order.status==='paid' ? 'Mark Unpaid' : 'Mark Paid' %>
+          </button>
+        </form>
+        <form action="/admin/orders/<%= order.id %>/mark-cancelled" method="post">
+          <button class="btn">Cancel</button>
+        </form>
+      </div>
+    </div></div>
+  </div>
+  <h3>Items</h3>
+  <table class="table">
+    <thead><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Subtotal</th></tr></thead>
+    <tbody>
+      <% items.forEach(i=>{ %>
+        <tr><td><%= i.name %></td><td><%= i.quantity %></td><td>AED <%= fmtMoney(i.unit_price) %></td><td><strong>AED <%= fmtMoney(i.subtotal) %></strong></td></tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>

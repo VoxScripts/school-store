@@ -1,0 +1,32 @@
+<% layout('layout', { title: 'Items' }) %>
+<section>
+  <h1>Items</h1>
+  <div style="display:flex;gap:8px;margin-bottom:12px;">
+    <a href="/admin/items/new" class="btn primary">+ New Item</a>
+  </div>
+  <table class="table">
+    <thead><tr><th>ID</th><th>Item</th><th>Price</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      <% rows.forEach(r=>{ %>
+        <tr>
+          <td>#<%= r.id %></td>
+          <td class="flex">
+            <img src="<%= r.image_url %>" style="width:42px;height:42px;border-radius:8px;object-fit:cover;"/>
+            <div>
+              <strong><%= r.name %></strong>
+              <div class="muted"><%= r.description %></div>
+            </div>
+          </td>
+          <td>AED <%= r.price.toFixed(2) %></td>
+          <td><span class="badge"><%= r.active ? 'active' : 'inactive' %></span></td>
+          <td class="right">
+            <a href="/admin/items/<%= r.id %>/edit" class="btn small">Edit</a>
+            <form action="/admin/items/<%= r.id %>/toggle-active" method="post" style="display:inline;">
+              <button class="btn small"><%= r.active ? 'Deactivate' : 'Activate' %></button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</section>

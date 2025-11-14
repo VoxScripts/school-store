@@ -1,0 +1,61 @@
+<% layout('layout', { title: 'Checkout', cart }) %>
+
+<section>
+  <h1>Checkout</h1>
+  <div class="alert">
+    Orders are fulfilled inside school.
+    For cash, pay <%= process.env.SCHOOL_SHAIKH_NAME || 'Shaikh' %> <%= fmtMoney(total) %> AED to process.
+    <br>For Card, select card and you will be redirected to a Payment Portal
+  </div>
+
+  <form action="/checkout" method="post" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+    <div class="row">
+      <div>
+        <label>Full Name</label>
+        <input name="customer_name" placeholder="e.g. Ahmed Ali" required/>
+      </div>
+      <div>
+        <label>Phone Number</label>
+        <input name="customer_phone" type="tel" placeholder="e.g. 0501234567" required/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Class / Section</label>
+        <input name="customer_class" placeholder="e.g. 10-B" required/>
+      </div>
+      <div>
+        <label>Payment Method</label>
+        <div class="flex" style="gap:16px;">
+          <!-- Cash Option -->
+          <label class="flex" style="gap:6px;">
+            <input type="radio" name="payment_method" value="cash" required/>
+            Cash
+          </label>
+
+          <!-- Card Option -->
+          <label class="flex" style="gap:6px;">
+            <input type="radio" name="payment_method" value="card" required/>
+            Card
+            <!-- Visa / Mastercard icons -->
+            <span class="flex" style="gap:4px;align-items:center;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                   alt="Visa" style="height:16px;filter:brightness(var(--logo-brightness,1));"/>
+              <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"
+                   alt="Mastercard" style="height:16px;filter:brightness(var(--logo-brightness,1));"/>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row full">
+      <div style="font-size:16px;">
+        Total to Pay: <strong>AED <%= fmtMoney(total) %></strong>
+      </div>
+    </div>
+
+    <button class="btn primary">Submit Order</button>
+  </form>
+</section>

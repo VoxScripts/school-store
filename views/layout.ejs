@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title><%= title || "School Store" %></title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation Bar -->
+    <div class="nav">
+      <div class="flex" style="gap:12px;align-items:center;">
+        <!-- Logo only (clickable link to homepage) -->
+        <a href="/" class="brand" style="display:flex;align-items:center;text-decoration:none;">
+          <img src="/images/logo.png" alt="Logo" class="logo" />
+        </a>
+      </div>
+
+      <div class="actions">
+        <a href="/cart" class="btn small" id="cartBtn" aria-label="Cart">
+          🛒 <span class="cart-badge" id="cartCount">
+            <%= (cart && cart.length) ? cart.reduce((s,i)=>s+i.qty,0) : 0 %>
+          </span>
+        </a>
+        <a href="/admin/login" class="btn ghost small">Admin</a>
+        <button id="themeToggle" class="btn small" title="Toggle theme">🌓</button>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="toast" class="toast" hidden></div>
+
+    <!-- Page body -->
+    <%- body %>
+
+    <!-- Footer -->
+    <div class="footer">Run and managed by Shaikh's team</div>
+  </div>
+
+  <script src="/js/theme.js"></script>
+</body>
+</html>

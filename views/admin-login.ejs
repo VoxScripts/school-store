@@ -1,0 +1,10 @@
+<% layout('layout', { title: 'Admin Login' }) %>
+<section style="max-width:480px;margin:0 auto;">
+  <h1>Admin Login</h1>
+  <% if (error) { %><div class="alert"><%= error %></div><% } %>
+  <form action="/admin/login" method="post" style="display:flex;flex-direction:column;gap:12px;margin-top:12px;">
+    <div><label>Username</label><input name="username" required/></div>
+    <div><label>Password</label><input name="password" type="password" required/></div>
+    <button class="btn primary">Login</button>
+  </form>
+</section>

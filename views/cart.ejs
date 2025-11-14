@@ -1,0 +1,32 @@
+<% layout('layout', { title: 'Cart', cart }) %>
+<section>
+  <h1>Your Cart</h1>
+  <% if (!cart.length) { %>
+    <div class="empty">Your cart is empty.</div>
+  <% } else { %>
+  <table class="table">
+    <thead><tr><th>Item</th><th>Qty</th><th>Unit</th><th>Subtotal</th></tr></thead>
+    <tbody>
+      <% let total = 0; cart.forEach(i=>{ const sub = i.price * i.qty; total += sub; %>
+        <tr>
+          <td class="flex"><img src="<%= i.image_url %>" alt="" style="width:48px;height:48px;object-fit:cover;border-radius:8px;"/> <div><strong><%= i.name %></strong></div></td>
+          <td>
+            <form action="/cart/update" method="post" style="display:flex;gap:6px;">
+              <input type="hidden" name="id" value="<%= i.id %>"/>
+              <input type="number" min="0" name="qty" value="<%= i.qty %>" style="width:80px;" required/>
+              <button class="btn small">Update</button>
+            </form>
+          </td>
+          <td>AED <%= i.price.toFixed(2) %></td>
+          <td><strong>AED <%= sub.toFixed(2) %></strong></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <div style="display:flex;align-items:center;gap:12px;margin-top:12px;">
+    <form action="/cart/clear" method="post"><button class="btn ghost">Clear</button></form>
+    <span class="right" style="margin-left:auto;">Total: <strong>AED <%= total.toFixed(2) %></strong></span>
+    <a href="/checkout" class="btn primary">Proceed to Checkout</a>
+  </div>
+  <% } %>
+</section>
