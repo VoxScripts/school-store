@@ -128,3 +128,76 @@ form .row.full { grid-template-columns: 1fr; }
   color: var(--text);
 }
 
+/* ===========================
+   PAYMENT OPTIONS — RESPONSIVE FIX
+   =========================== */
+
+.payment-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.payment-option input[type="radio"] {
+  transform: scale(1.2);
+  margin-top: 3px;
+}
+
+.pay-label-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-icons img {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Mobile & iPad Styling */
+@media (max-width: 900px) {
+  .pay-label-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .card-icons img {
+    height: 20px;
+  }
+
+  .payment-option {
+    align-items: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .payment-options {
+    gap: 16px;
+  }
+
+  .pay-label-group {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .card-icons img {
+    height: 18px;
+  }
+}
+
+

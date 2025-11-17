@@ -9,6 +9,7 @@
   </div>
 
   <form action="/checkout" method="post" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+
     <div class="row">
       <div>
         <label>Full Name</label>
@@ -25,28 +26,34 @@
         <label>Class / Section</label>
         <input name="customer_class" placeholder="e.g. 10-B" required/>
       </div>
+
       <div>
         <label>Payment Method</label>
-        <div class="flex" style="gap:16px;">
-          <!-- Cash Option -->
-          <label class="flex" style="gap:6px;">
+
+        <div class="payment-options">
+
+          <!-- CASH -->
+          <label class="payment-option">
             <input type="radio" name="payment_method" value="cash" required/>
-            Cash
+            <span>Cash</span>
           </label>
 
-          <!-- Card Option -->
-          <label class="flex" style="gap:6px;">
+          <!-- CARD -->
+          <label class="payment-option">
             <input type="radio" name="payment_method" value="card" required/>
-            Card
-            <!-- Visa / Mastercard icons -->
-            <span class="flex" style="gap:4px;align-items:center;">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                   alt="Visa" style="height:16px;filter:brightness(var(--logo-brightness,1));"/>
-              <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"
-                   alt="Mastercard" style="height:16px;filter:brightness(var(--logo-brightness,1));"/>
-            </span>
+
+            <div class="pay-label-group">
+              <span>Card Payment</span>
+
+              <div class="card-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa"/>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard"/>
+              </div>
+            </div>
           </label>
+
         </div>
+
       </div>
     </div>
 
