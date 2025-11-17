@@ -2,66 +2,82 @@
 
 <section>
   <h1>Checkout</h1>
+
   <div class="alert">
-    Orders are fulfilled inside school.
-    For cash, pay <%= process.env.SCHOOL_SHAIKH_NAME || 'Shaikh' %> <%= fmtMoney(total) %> AED to process.
-    <br>For Card, select card and you will be redirected to a Payment Portal
+    Orders are fulfilled inside school.<br>
+    For cash, pay <%= process.env.SCHOOL_SHAIKH_NAME || 'Shaikh' %> <%= fmtMoney(total) %> AED to process.<br>
+    For Card, select card and you will be redirected to a Payment Portal.
   </div>
 
-  <form action="/checkout" method="post" style="margin-top:12px;display:flex;flex-direction:column;gap:12px;">
+  <form action="/checkout" method="post"
+        style="margin-top:12px;display:flex;flex-direction:column;gap:18px;">
 
-    <div class="row">
+    <!-- =============================
+         FORM GRID (RESPONSIVE)
+    ============================== -->
+    <div class="checkout-grid">
+
       <div>
         <label>Full Name</label>
-        <input name="customer_name" placeholder="e.g. Ahmed Ali" required/>
+        <input name="customer_name" placeholder="e.g. Ahmed Ali" required />
       </div>
+
       <div>
         <label>Phone Number</label>
-        <input name="customer_phone" type="tel" placeholder="e.g. 0501234567" required/>
+        <input name="customer_phone" type="tel" placeholder="e.g. 0501234567" required />
       </div>
-    </div>
 
-    <div class="row">
       <div>
         <label>Class / Section</label>
-        <input name="customer_class" placeholder="e.g. 10-B" required/>
+        <input name="customer_class" placeholder="e.g. 10-B" required />
       </div>
 
+      <!-- =============================
+           MODERN PAYMENT STYLE
+      ============================== -->
       <div>
         <label>Payment Method</label>
 
-        <div class="payment-options">
+        <div class="payment-section">
 
-          <!-- CASH -->
-          <label class="payment-option">
-            <input type="radio" name="payment_method" value="cash" required/>
-            <span>Cash</span>
+          <!-- CASH CARD -->
+          <label class="pay-card">
+            <input type="radio" name="payment_method" value="cash" required />
+            <div class="pay-card-body">
+              <div class="pay-card-title">Cash</div>
+              <div class="pay-card-desc">Pay inside school to Shaikh</div>
+            </div>
           </label>
 
-          <!-- CARD -->
-          <label class="payment-option">
-  <input type="radio" name="payment_method" value="card" required />
+          <!-- CARD PAYMENT -->
+          <label class="pay-card">
+            <input type="radio" name="payment_method" value="card" required />
+            <div class="pay-card-body">
+              <div class="pay-card-title">Card Payment</div>
 
-  <div class="pay-label-group">
-    <div class="card-icons">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
-    </div>
-  </div>
-</label>
+              <div class="card-icons">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
+              </div>
 
+              <div class="pay-card-desc">Secure online payment</div>
+            </div>
+          </label>
 
         </div>
-
       </div>
+
     </div>
 
-    <div class="row full">
-      <div style="font-size:16px;">
-        Total to Pay: <strong>AED <%= fmtMoney(total) %></strong>
-      </div>
+    <!-- =============================
+         TOTAL + BUTTON
+    ============================== -->
+    <div style="font-size:16px;">
+      Total to Pay:
+      <strong>AED <%= fmtMoney(total) %></strong>
     </div>
 
     <button class="btn primary">Submit Order</button>
+
   </form>
 </section>
